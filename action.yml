@@ -1,41 +1,11 @@
-name: "Debian Pachages with actions"
+name: "Debian Pachages with actions Publish"
 author: "Sirherobrine23"
 description: "Create Debian Packages"
 inputs:
-  DEBUG:
-    description: 'Show some more content, default is false'
-    required: false
-    default: false
-
-  SCRIPT:
-    description: 'Script to be executed so wants to organize the files'
-    required: false
-    default: ''
-
-  SPACE:
-    description: 'Script to be executed so wants to organize the files'
-    required: false
-    default: false
-
-  GIT:
-    description: 'Script to be executed so wants to organize the files'
-    required: false
-    default: ''
-
-  BRANCH:
-    description: 'Script to be executed so wants to organize the files'
-    required: false
-    default: 'main'
-
-  URL:
-    description: 'Script to be executed so wants to organize the files'
-    required: false
-    default: ''
-
   PATH:
     description: 'Script to be executed so wants to organize the files'
     required: false
-    default: 'package/main'
+    default: ${{ env.DEB_PATH }}
 
   TOKEN:
     description: 'Script to be executed so wants to organize the files'
@@ -44,9 +14,8 @@ inputs:
 
 runs:
   using: 'node12'
-  pre: 'setup.js'
+  pre: setup.sh
   main: 'repo.js'
-  post: 'post.js'
 
 branding:
   icon: 'code'
