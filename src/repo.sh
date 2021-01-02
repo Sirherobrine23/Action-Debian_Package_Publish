@@ -19,12 +19,10 @@ git config http.sslVerify false
 git config --global user.name "github-actions[bot]"
 git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-if git clone $repo -b ${INPUT_BRANCH} $DIR_PATH/repo;then
-    if cd $DIR_PATH/repo/;then
-        if ! cd ${INPUT_REPO_PATH};then
-            exit 4
-        fi
-    else
+git clone $repo -b ${INPUT_BRANCH} $DIR_PATH/repo
+if [ -d $DIR_PATH/repo ];then
+    cd $DIR_PATH/repo/
+    if ! cd ${INPUT_REPO_PATH};then
         exit 3
     fi
 else
