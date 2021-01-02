@@ -7,6 +7,9 @@ core.setOutput("time", time);
 // ---
 var serverstated = exec(`chmod 777 ${__dirname}/src/repo.sh && ${__dirname}/src/repo.sh`, {detached: false, maxBuffer: Infinity});
 function logoutpu(dados){
+    if (dados.slice(-1) == '\n'){
+        var dados = dados.slice(0, -1)
+    }
     console.log(dados)
 }
 serverstated.stdout.on('data', function (data) {

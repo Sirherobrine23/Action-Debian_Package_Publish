@@ -36,7 +36,7 @@ if [ -d ${INPUT_REPO_PATH} ];then
 
     git status
     echo "-------------------------"
-    git push --force --verbose
+    git push || git push --force
     echo "Git exit code: $?"
     echo "-------------------------"
     # git push --force --verbose || {
