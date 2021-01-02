@@ -34,7 +34,7 @@ inputs:
   
 runs:
   using: 'node12'
-  pre: setup.sh
+  pre: setup.js
   main: 'repo.js'
 
 branding:
