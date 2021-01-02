@@ -19,12 +19,17 @@ git config http.sslVerify false
 git config --global user.name "github-actions[bot]"
 git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-git clone $repo -b ${BRANCH} $DIR_PATH/repo
+git clone $repo -b ${BRANCH} $DIR_PATH/repo || exit 2
 #
-cd $DIR_PATH/repo/
-cd ${INPUT_REPO_PATH}
+if cd $DIR_PATH/repo/;then
+    if ! cd ${INPUT_REPO_PATH};then
+        exit 4
+    fi
+else
+    exit 3
+fi
+pwd
 cp -rfv ${INPUT_PATH} ./
-cd $DIR_PATH/repo/
 git add .
 git commit -m 'Upload Package, Github Actions' -m "Package Path Uploaded: ${INPUT_PATH}"
 if [ $INPUT_SQUASH == 'true' ];then
