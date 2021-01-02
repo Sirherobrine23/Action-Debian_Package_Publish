@@ -5,7 +5,7 @@ inputs:
   PATH:
     description: 'Script to be executed so wants to organize the files'
     required: false
-    default: ${{ env.DEB_PATH }}
+    default: '${{ env.DEB_PATH }}'
 
   REPO_PATH:
     description: 'Script to be executed so wants to organize the files'
@@ -15,7 +15,7 @@ inputs:
   TOKEN:
     description: 'Script to be executed so wants to organize the files'
     required: false
-    default: ${{ github.token }}
+    default: '${{ github.token }}'
   
   REPOSITORY:
     description: 'Script to be executed so wants to organize the files'
@@ -25,7 +25,7 @@ inputs:
   BRANCH:
     description: 'Script to be executed so wants to organize the files'
     required: false
-    default: https://github.com/${{ github.repository }}
+    default: 'https://github.com/${{ github.repository }}'
     
   SQUASH:
     description: 'Script to be executed so wants to organize the files'
