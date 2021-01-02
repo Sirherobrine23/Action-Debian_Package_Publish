@@ -26,16 +26,14 @@ if [ -d ${INPUT_REPO_PATH} ];then
     pwd
     cp -rfv ${INPUT_PATH} ./
     git add .
-    git commit -m 'Upload Package, Github Actions' -m "Package Path Uploaded: ${INPUT_PATH}"
+    git commit -m 'Upload Package, Github Actions' -m "Package Uploaded: ${DEB_NAME}"
     if [ $INPUT_SQUASH == 'true' ];then
         echo "This will erase the file history"
         git rebase --root --autosquash
         git commit -m 'squash Files' -m "Package Path Uploaded: ${INPUT_PATH}" -m 'Git Squash'
     fi
-    if git push --force --verbose ;then
-        echo
-    else
-        echo "Erro in "
+    if ! git push --force --verbose ;then
+        echo "Erro in push"
         exit 3
     fi
 else
