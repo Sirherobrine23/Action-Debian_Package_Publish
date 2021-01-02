@@ -41,5 +41,7 @@ if [ $INPUT_SQUASH == 'true' ];then
     git rebase --root --autosquash
     git commit -m 'squash Files' -m "Package Path Uploaded: ${INPUT_PATH}" -m 'Git Squash'
 fi
-git push -f || exit 5
+if ! git push --force --verbose ;then
+    echo "Erro in "
+    exit 5
 exit 0
