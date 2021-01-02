@@ -1,6 +1,7 @@
 #!/bin/bash
 DIR_PATH=`pwd`
-rm -rfv .git
+rm -rf .git
+sudo apt reinstall git
 # URL
 if echo $INPUT_REPOSITORY|grep -q 'https://';then
     repo="https://${GITHUB_ACTOR}:${INPUT_TOKEN}@$(echo $INPUT_REPOSITORY|sed 's|https://||g')"
@@ -31,5 +32,5 @@ if [ $INPUT_SQUASH == 'true' ];then
     git rebase --root --autosquash
     git commit -m 'squash Files' -m "Package Path Uploaded: ${INPUT_PATH}" -m 'Git Squash'
 fi
-git push -f
+git push -f || exit 2
 exit 0
