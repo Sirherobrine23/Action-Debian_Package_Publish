@@ -1,4 +1,6 @@
 #!/bin/bash
+DIR_PATH=`pwd`
+rm -rfv .git
 # URL
 if echo $INPUT_REPOSITORY|grep -q 'https://';then
     repo="https://${GITHUB_ACTOR}:${INPUT_TOKEN}@$(echo $INPUT_REPOSITORY|sed 's|https://||g')"
@@ -16,12 +18,12 @@ git config http.sslVerify false
 git config --global user.name "github-actions[bot]"
 git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-git clone $repo -b ${BRANCH} /tmp/repo
+git clone $repo -b ${BRANCH} $DIR_PATH/repo
 #
-cd /tmp/repo
+cd $DIR_PATH/repo/
 cd ${INPUT_REPO_PATH}
 cp -rfv ${INPUT_PATH} ./
-cd /tmp/repo
+cd $DIR_PATH/repo/
 git add .
 git commit -m 'Upload Package, Github Actions' -m "Package Path Uploaded: ${INPUT_PATH}"
 if [ $INPUT_SQUASH == 'true' ];then
