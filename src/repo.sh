@@ -26,7 +26,7 @@ if [ -d ${INPUT_REPO_PATH} ];then
     cp -rfv ${INPUT_PATH} ./
     cd $DIR_PATH/repo/
     git add . -A
-    git commit -m 'Upload Package, Github Actions' -m "Package Uploaded: ${DEB_NAME}"
+    git commit -m "Upload Package: ${DEB_NAME}"
     if [ $INPUT_SQUASH == 'true' ];then
         echo "This will erase the file history"
         git rebase --root --autosquash
