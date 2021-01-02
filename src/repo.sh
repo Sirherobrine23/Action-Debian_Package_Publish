@@ -32,9 +32,8 @@ if [ -d ${INPUT_REPO_PATH} ];then
         git rebase --root --autosquash
         git commit -m 'squash Files' -m "Package Path Uploaded: ${INPUT_PATH}" -m 'Git Squash'
     fi
-    if ! git push --force --verbose ;then
-        git commit -m 'Atemp 1 Push'
-        if ! git push --force --verbose ;then
+    if ! git push --force --verbose;then
+        if ! git push --force;then
             echo "Erro in push"
             exit 3
         fi
