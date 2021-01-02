@@ -18,7 +18,8 @@ fi
 git config user.name github-actions
 git config user.email github-actions@github.com
 echo $repo
-git clone $repo -b ${INPUT_BRANCH} $DIR_PATH/repo
+git clone $repo $DIR_PATH/repo
+git checkout ${INPUT_BRANCH}
 cd $DIR_PATH/repo/
 if [ -d ${INPUT_REPO_PATH} ];then
     cd ${INPUT_REPO_PATH}
@@ -33,7 +34,8 @@ if [ -d ${INPUT_REPO_PATH} ];then
         git commit -m 'squash Files' -m "Package Path Uploaded: ${DEB_NAME}" -m 'Git Squash'
     fi
     git status
-    sudo git push --force --verbose;echo $?
+    git push --force --verbose
+    echo "Git exit code: $?"
     # git push --force --verbose || {
     #     echo "Erro in push"
     #     exit 3
