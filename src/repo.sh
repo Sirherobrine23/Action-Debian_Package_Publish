@@ -15,8 +15,8 @@ else
 fi
 
 # USE
-git config --global user.name "github-actions[bot]"
-git config --global user.email "github-actions[bot]@users.noreply.github.com"
+git config user.name github-actions
+git config user.email github-actions@github.com
 echo $repo
 git clone $repo -b ${INPUT_BRANCH} $DIR_PATH/repo
 cd $DIR_PATH/repo/
@@ -32,10 +32,11 @@ if [ -d ${INPUT_REPO_PATH} ];then
         git rebase --root --autosquash
         git commit -m 'squash Files' -m "Package Path Uploaded: ${DEB_NAME}" -m 'Git Squash'
     fi
-    git push --force --verbose || {
-        echo "Erro in push"
-        exit 3
-    }
+    git push --force --verbose;echo $?
+    # git push --force --verbose || {
+    #     echo "Erro in push"
+    #     exit 3
+    # }
 else
     exit 2
 fi
