@@ -25,7 +25,7 @@ inputs:
   BRANCH:
     description: 'Script to be executed so wants to organize the files'
     required: false
-    default: 'https://github.com/${{ github.repository }}'
+    default: 'main'
     
   SQUASH:
     description: 'Script to be executed so wants to organize the files'

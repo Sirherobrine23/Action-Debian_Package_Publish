@@ -1,11 +1,11 @@
 #!/bin/bash
 # URL
 if echo $INPUT_REPOSITORY|grep -q 'https://';then
-    repo="https://${GITHUB_ACTOR}:${INPUT_TOKEN}@$(echo $INPUT_REPOSITORY|sed 's|https://||g').git"
+    repo="https://${GITHUB_ACTOR}:${INPUT_TOKEN}@$(echo $INPUT_REPOSITORY|sed 's|https://||g')"
 elif echo $INPUT_REPOSITORY|grep -q 'http://';then
-    repo="http://${GITHUB_ACTOR}:${INPUT_TOKEN}@$(echo $INPUT_REPOSITORY|sed 's|http://||g').git"
+    repo="http://${GITHUB_ACTOR}:${INPUT_TOKEN}@$(echo $INPUT_REPOSITORY|sed 's|http://||g')"
 elif echo $INPUT_REPOSITORY|grep -q 'git://';then
-    repo="git://${GITHUB_ACTOR}:${INPUT_TOKEN}@$(echo $INPUT_REPOSITORY|sed 's|git://||g').git"
+    repo="git://${GITHUB_ACTOR}:${INPUT_TOKEN}@$(echo $INPUT_REPOSITORY|sed 's|git://||g')"
 else
     echo "Não foi encontrado um repositorio git compativel"
     exit 1
