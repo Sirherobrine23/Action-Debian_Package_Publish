@@ -21,9 +21,10 @@ git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
 git clone $repo -b ${INPUT_BRANCH} $DIR_PATH/repo
 cd $DIR_PATH/repo/
-if ! cd ${INPUT_REPO_PATH};then
+if ! [ -d ${INPUT_REPO_PATH} ];then
     exit 2
 fi
+cd ${INPUT_REPO_PATH}
 pwd
 cp -rfv ${INPUT_PATH} ./
 git add .
