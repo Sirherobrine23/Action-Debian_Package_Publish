@@ -33,8 +33,11 @@ if [ -d ${INPUT_REPO_PATH} ];then
         git commit -m 'squash Files' -m "Package Path Uploaded: ${INPUT_PATH}" -m 'Git Squash'
     fi
     if ! git push --force --verbose ;then
-        echo "Erro in push"
-        exit 3
+        git commit -m 'Atemp 1 Push'
+        if ! git push --force --verbose ;then
+            echo "Erro in push"
+            exit 3
+        fi
     fi
 else
     exit 2
