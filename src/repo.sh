@@ -20,14 +20,8 @@ git config --global user.name "github-actions[bot]"
 git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
 git clone $repo -b ${INPUT_BRANCH} $DIR_PATH/repo
-if [ -d $DIR_PATH/repo ];then
-    cd $DIR_PATH/repo/
-    if ! cd ${INPUT_REPO_PATH};then
-        exit 3
-    fi
-else
-    echo "Git clone erro"
-    echo $repo
+cd $DIR_PATH/repo/
+if ! cd ${INPUT_REPO_PATH};then
     exit 2
 fi
 pwd
@@ -41,5 +35,5 @@ if [ $INPUT_SQUASH == 'true' ];then
 fi
 if ! git push --force --verbose ;then
     echo "Erro in "
-    exit 5
+    exit 3
 exit 0
