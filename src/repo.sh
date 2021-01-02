@@ -19,14 +19,17 @@ git config http.sslVerify false
 git config --global user.name "github-actions[bot]"
 git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-git clone $repo -b ${BRANCH} $DIR_PATH/repo || exit 2
-#
-if cd $DIR_PATH/repo/;then
-    if ! cd ${INPUT_REPO_PATH};then
-        exit 4
+if git clone $repo -b ${BRANCH} $DIR_PATH/repo;then
+    if cd $DIR_PATH/repo/;then
+        if ! cd ${INPUT_REPO_PATH};then
+            exit 4
+        fi
+    else
+        exit 3
     fi
 else
-    exit 3
+    echo "Git clone erro"
+    exit 2
 fi
 pwd
 cp -rfv ${INPUT_PATH} ./
@@ -37,5 +40,5 @@ if [ $INPUT_SQUASH == 'true' ];then
     git rebase --root --autosquash
     git commit -m 'squash Files' -m "Package Path Uploaded: ${INPUT_PATH}" -m 'Git Squash'
 fi
-git push -f || exit 2
+git push -f || exit 5
 exit 0
