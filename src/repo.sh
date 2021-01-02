@@ -15,10 +15,9 @@ else
 fi
 
 # USE
-git config http.sslVerify false 
 git config --global user.name "github-actions[bot]"
 git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
+echo $repo
 git clone $repo -b ${INPUT_BRANCH} $DIR_PATH/repo
 cd $DIR_PATH/repo/
 if [ -d ${INPUT_REPO_PATH} ];then
@@ -26,17 +25,17 @@ if [ -d ${INPUT_REPO_PATH} ];then
     pwd
     cp -rfv ${INPUT_PATH} ./
     cd $DIR_PATH/repo/
-    git add .
+    git add . -A
     git commit -m 'Upload Package, Github Actions' -m "Package Uploaded: ${DEB_NAME}"
     if [ $INPUT_SQUASH == 'true' ];then
         echo "This will erase the file history"
         git rebase --root --autosquash
         git commit -m 'squash Files' -m "Package Path Uploaded: ${DEB_NAME}" -m 'Git Squash'
     fi
-    if ! git push --force --verbose ;then
+    git push --force --verbose || {
         echo "Erro in push"
         exit 3
-    fi
+    }
 else
     exit 2
 fi
