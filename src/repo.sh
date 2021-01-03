@@ -53,6 +53,7 @@ then
     if ! git push;then
         echo "Error pushing the commit, 2 attempt"
         git push --force || {
+            echo "Git erro: $?"
             echo "Erro in push"
             exit 3
         }
