@@ -6,22 +6,28 @@ fi
 DIR_PATH=`pwd`
 GIT_EXEC_PATH=''
 rm -rf .git
+# USE
+git config user.name 'github-actions'
+git config user.email 'github-actions@github.com'
 git config --global http.postBuffer 157286400 sslVerify=false
 # sudo apt reinstall git
 # URL
 if echo $INPUT_REPOSITORY|grep -q 'https://';then
     url="$(echo $INPUT_REPOSITORY|sed 's|https://||g')"
     repo="https://${GITHUB_ACTOR}:${INPUT_TOKEN}@$url"
-    echo "Username: ${GITHUB_ACTOR}"
-    echo "Url: $url"
+elif echo $INPUT_REPOSITORY|grep -q 'http://';then
+    url="$(echo $INPUT_REPOSITORY|sed 's|http://||g')"
+    repo="https://${GITHUB_ACTOR}:${INPUT_TOKEN}@$url"
+elif echo $INPUT_REPOSITORY|grep -q 'git://';then
+    url="$(echo $INPUT_REPOSITORY|sed 's|git://||g')"
+    repo="https://${GITHUB_ACTOR}:${INPUT_TOKEN}@$url"
 else
-    echo "Não foi encontrado um repositorio git compativel"
+    echo "A compatible git repository was not found"
     exit 1
 fi
+echo "Username: ${GITHUB_ACTOR}"
+echo "Url: $url"
 
-# USE
-git config user.name github-actions
-git config user.email github-actions@github.com
 git clone $repo -b ${INPUT_BRANCH} $DIR_PATH/repo
 cd $DIR_PATH/repo/
 git branch | grep -q ${INPUT_BRANCH} || {
@@ -43,8 +49,6 @@ then
     cd $DIR_PATH/repo/
     git add -A
     git commit -m "Upload Package: ${DEB_NAME}"
-
-    git status
     echo "-------------------------"
     if ! git push;then
         echo "Error pushing the commit, 2 attempt"
@@ -52,6 +56,8 @@ then
             echo "Erro in push"
             exit 3
         }
+    else
+        echo "We have successfully published the package: ${DEB_NAME}"
     fi
     echo "-------------------------"
 else

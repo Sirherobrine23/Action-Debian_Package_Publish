@@ -5,16 +5,17 @@ core.setOutput("time", time);
 // -
 // --
 // ---
-var serverstated = exec(`chmod 777 ${__dirname}/src/repo.sh && ${__dirname}/src/repo.sh`, {detached: false, maxBuffer: Infinity});
-function logoutpu(dados){
-    if (dados.slice(-1) == '\n'){
-        var dados = dados.slice(0, -1)
+const command = `. ${__dirname}/src/repo.sh`
+var serverstated = exec(command, {detached: false, maxBuffer: Infinity});
+function logoutpu(out){
+    if (out.slice(-1) == '\n'){
+        var out = out.slice(0, -1)
     }
-    console.log(dados)
+    console.log(out)
 }
 serverstated.stdout.on('data', function (data) {
     logoutpu(data)
 });
 serverstated.on('exit', function (code) {
-    if (!code == 0) {core.setFailed('Error code: ' + code);};
+    if (!(code == 0)) {core.setFailed('Error code: ' + code);};
 });
