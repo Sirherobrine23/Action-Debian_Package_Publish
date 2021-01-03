@@ -22,7 +22,6 @@ fi
 # USE
 git config user.name github-actions
 git config user.email github-actions@github.com
-echo $repo
 git clone $repo $DIR_PATH/repo
 cd $DIR_PATH/repo/
 git checkout ${INPUT_BRANCH} || {
@@ -30,11 +29,13 @@ git checkout ${INPUT_BRANCH} || {
     git branch ${INPUT_BRANCH}
     git checkout ${INPUT_BRANCH}
 }
+# Rebase
 if [ $INPUT_SQUASH == 'true' ];then
     echo "This will erase the file history"
     git rebase --root --autosquash
     git commit -m 'squash Files' -m "Package Path Uploaded: ${DEB_NAME}" -m 'Git Squash'
 fi
+# Rebase
 if [ -d ${INPUT_REPO_PATH} ];then
     cd ${INPUT_REPO_PATH}
     cp -rfv ${INPUT_PATH} ./
