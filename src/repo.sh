@@ -45,7 +45,7 @@ fi
 if [ -d ${INPUT_REPO_PATH} ]
 then
     cd ${INPUT_REPO_PATH}
-    cp -rfv ${INPUT_PATH} ./
+    cp -rfv ${INPUT_PATH} ${PWD}/
     cd $DIR_PATH/repo/
     git add -A
     git commit -m "Upload Package: ${DEB_NAME}"
