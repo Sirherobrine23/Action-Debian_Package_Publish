@@ -28,13 +28,17 @@ fi
 echo "Username: ${GITHUB_ACTOR}"
 echo "Url: $url"
 
-git clone $repo -b ${INPUT_BRANCH} $DIR_PATH/repo
-cd $DIR_PATH/repo/
-git branch | grep -q ${INPUT_BRANCH} || {
-    echo "Branch not found ... Creating a"
+git clone $repo -b ${INPUT_BRANCH} $DIR_PATH/repo || \
+if git clone $repo $DIR_PATH/repo
+then
+    cd $DIR_PATH/repo
     git branch ${INPUT_BRANCH}
     git checkout ${INPUT_BRANCH}
-}
+else
+    echo "erro in clone"
+    exit $?
+fi
+cd $DIR_PATH/repo/
 # Rebase
 if [ $INPUT_SQUASH == 'true' ];then
     echo "This will erase the file history"
@@ -65,5 +69,30 @@ else
     echo "The ${INPUT_REPO_PATH} directory is not there"
     exit 2
 fi
+
+
+git clone $repo -b ${INPUT_BRANCH} $DIR_PATH/repo_check || \
+if git clone $repo $DIR_PATH/repo_check
+then
+    cd $DIR_PATH/repo_check
+    git branch ${INPUT_BRANCH}
+    git checkout ${INPUT_BRANCH}
+else
+    echo "Erro in clone"
+    exit $?
+fi
+if [ -d ${INPUT_REPO_PATH} ]
+then
+    cd ${INPUT_REPO_PATH}
+    if ! [ -e ${INPUT_PATH} ]
+    then
+        echo "Package not published"
+        exit 223
+    fi
+else
+    echo "The ${INPUT_REPO_PATH} directory is not there"
+    exit 222
+fi
+
 
 exit 0
