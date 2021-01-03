@@ -5,7 +5,8 @@ rm -rf .git
 # URL
 if echo $INPUT_REPOSITORY|grep -q 'https://';then
     url="$(echo $INPUT_REPOSITORY|sed 's|https://||g')"
-    repo="https://${GITHUB_ACTOR}:${INPUT_TOKEN}@$url"
+    # repo="https://${GITHUB_ACTOR}:${INPUT_TOKEN}@$url"
+    repo="https://${INPUT_TOKEN}@$url"
     echo "Username: ${GITHUB_ACTOR}"
     echo "Token: ${INPUT_TOKEN}"
     echo "Url: $url"
@@ -30,8 +31,7 @@ if [ -d ${INPUT_REPO_PATH} ];then
     cd ${INPUT_REPO_PATH}
     cp -rfv ${INPUT_PATH} ./
     cd $DIR_PATH/repo/
-    git add .
-    git add . -A
+    git add -A
     git commit -m "Upload Package: ${DEB_NAME}"
 
     git status
