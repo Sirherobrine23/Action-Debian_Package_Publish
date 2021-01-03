@@ -2,6 +2,7 @@
 DIR_PATH=`pwd`
 GIT_EXEC_PATH=''
 rm -rf .git
+git config --global http.postBuffer 157286400 sslVerify=false
 # sudo apt reinstall git
 # URL
 if echo $INPUT_REPOSITORY|grep -q 'https://';then
