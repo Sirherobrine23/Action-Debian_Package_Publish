@@ -22,9 +22,9 @@ fi
 # USE
 git config user.name github-actions
 git config user.email github-actions@github.com
-git clone $repo $DIR_PATH/repo
+git clone $repo -b ${INPUT_BRANCH} $DIR_PATH/repo
 cd $DIR_PATH/repo/
-git checkout ${INPUT_BRANCH} || {
+git branch | grep -q ${INPUT_BRANCH} || {
     echo "Branch not found ... Creating a"
     git branch ${INPUT_BRANCH}
     git checkout ${INPUT_BRANCH}
@@ -36,7 +36,8 @@ if [ $INPUT_SQUASH == 'true' ];then
     git commit -m 'squash Files' -m "Package Path Uploaded: ${DEB_NAME}" -m 'Git Squash'
 fi
 # Rebase
-if [ -d ${INPUT_REPO_PATH} ];then
+if [ -d ${INPUT_REPO_PATH} ]
+then
     cd ${INPUT_REPO_PATH}
     cp -rfv ${INPUT_PATH} ./
     cd $DIR_PATH/repo/
@@ -51,6 +52,7 @@ if [ -d ${INPUT_REPO_PATH} ];then
             echo "Erro in push"
             exit 3
         }
+    fi
     echo "-------------------------"
 else
     echo "The ${INPUT_REPO_PATH} directory is not there"
