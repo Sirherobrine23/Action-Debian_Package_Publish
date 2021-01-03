@@ -1,5 +1,6 @@
 #!/bin/bash
 DIR_PATH=`pwd`
+GIT_EXEC_PATH=''
 rm -rf .git
 # sudo apt reinstall git
 # URL
