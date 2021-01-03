@@ -1,4 +1,8 @@
 #!/bin/bash
+if [ $INPUT_GITHUB_TOKEN_V == $INPUT_TOKEN ];then
+    echo 'Do not use ${{secrets.GITHUB_TONKEN}}, it does not have access to other repositories'
+    exit 255
+fi
 DIR_PATH=`pwd`
 GIT_EXEC_PATH=''
 rm -rf .git
@@ -9,7 +13,6 @@ if echo $INPUT_REPOSITORY|grep -q 'https://';then
     url="$(echo $INPUT_REPOSITORY|sed 's|https://||g')"
     repo="https://${GITHUB_ACTOR}:${INPUT_TOKEN}@$url"
     echo "Username: ${GITHUB_ACTOR}"
-    echo "Token: ${INPUT_TOKEN}"
     echo "Url: $url"
 else
     echo "Não foi encontrado um repositorio git compativel"
@@ -22,7 +25,11 @@ git config user.email github-actions@github.com
 echo $repo
 git clone $repo $DIR_PATH/repo
 cd $DIR_PATH/repo/
-git checkout ${INPUT_BRANCH}
+git checkout ${INPUT_BRANCH} || {
+    echo "Branch not found ... Creating a"
+    git branch ${INPUT_BRANCH}
+    git checkout ${INPUT_BRANCH}
+}
 if [ $INPUT_SQUASH == 'true' ];then
     echo "This will erase the file history"
     git rebase --root --autosquash
@@ -37,15 +44,16 @@ if [ -d ${INPUT_REPO_PATH} ];then
 
     git status
     echo "-------------------------"
-    git push || git push --force
-    echo "Git exit code: $?"
+    if ! git push;then
+        echo "Error pushing the commit, 2 attempt"
+        git push --force || {
+            echo "Erro in push"
+            exit 3
+        }
     echo "-------------------------"
-    # git push --force --verbose || {
-    #     echo "Erro in push"
-    #     exit 3
-    # }
 else
+    echo "The ${INPUT_REPO_PATH} directory is not there"
     exit 2
 fi
 
-exit 255
+exit 0
