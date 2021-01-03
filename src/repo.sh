@@ -69,8 +69,9 @@ else
     echo "The ${INPUT_REPO_PATH} directory is not there"
     exit 2
 fi
-
-
+#
+echo "Checking if published"
+#
 git clone $repo -b ${INPUT_BRANCH} $DIR_PATH/repo_check || \
 if git clone $repo $DIR_PATH/repo_check
 then
@@ -88,6 +89,8 @@ then
     then
         echo "Package not published"
         exit 223
+    else
+        echo "Packages published successfully"
     fi
 else
     echo "The ${INPUT_REPO_PATH} directory is not there"
