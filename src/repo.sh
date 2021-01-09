@@ -50,16 +50,14 @@ if [ -d ${INPUT_REPO_PATH} ]
 then
     cd ${INPUT_REPO_PATH}
     cp -rfv ${INPUT_PATH} ${PWD}/
-    cd $DIR_PATH/repo/
-    git add -A
+    git add .
     git commit -m "Upload Package: ${DEB_NAME}"
     echo "-------------------------"
-    git push $repo --force HEAD:${INPUT_BRANCH}||{
+    if ! git push $repo --force HEAD:${INPUT_BRANCH};then
         git_erro=$?
         echo "Git erro: $git_erro"
         echo "Erro in push"
         exit $git_erro
-    }
     else
         echo "We have successfully published the package: ${DEB_NAME}"
     fi
