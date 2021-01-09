@@ -38,10 +38,9 @@ inputs:
     default: 'false'
   
 runs:
-  using: 'node12'
-  pre: setup.js
-  main: 'repo.js'
-
+  using: 'docker'
+  image: 'Dockerfile'
+  
 branding:
   icon: 'code'
   color: 'gray-dark'
