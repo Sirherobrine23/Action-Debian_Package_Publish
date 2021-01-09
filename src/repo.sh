@@ -54,7 +54,7 @@ then
     git add -A
     git commit -m "Upload Package: ${DEB_NAME}"
     echo "-------------------------"
-    git push --force HEAD:${INPUT_BRANCH}||{
+    git push --force ||{
         git_erro=$?
         echo "Git erro: $git_erro"
         echo "Erro in push"
