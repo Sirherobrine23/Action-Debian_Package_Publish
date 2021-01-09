@@ -53,13 +53,13 @@ then
     git add .
     git commit -m "Upload Package: ${DEB_NAME}"
     echo "-------------------------"
-    if ! git push $repo --force HEAD:${INPUT_BRANCH} &>> /tmp/git_log.txt;then
+    if git push $repo --force HEAD:${INPUT_BRANCH} &>> /tmp/git_log.txt;then
+        echo "We have successfully published the package: ${DEB_NAME}"
+    else
         git_erro=$?
         echo "Git erro: $git_erro"
         echo "Erro in push"
         exit $git_erro
-    else
-        echo "We have successfully published the package: ${DEB_NAME}"
     fi
     echo "-------------------------"
 else
