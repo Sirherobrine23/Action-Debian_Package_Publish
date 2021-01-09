@@ -42,7 +42,8 @@ cd $DIR_PATH/repo/
 # Rebase
 if [ $INPUT_SQUASH == 'true' ];then
     echo "This will erase the file history"
-    git rebase --root --autosquash
+    git_rabase_historic=$(git rev-list --count ${INPUT_BRANCH})
+    git rebase --root --autosquash HEAD~${git_rabase_historic}
     git commit -m 'squash Files' -m "Package Path Uploaded: ${DEB_NAME}" -m 'Git Squash'
 fi
 # Rebase
