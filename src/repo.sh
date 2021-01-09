@@ -53,7 +53,7 @@ then
     git add .
     git commit -m "Upload Package: ${DEB_NAME}"
     echo "-------------------------"
-    if ! git push $repo --force HEAD:${INPUT_BRANCH};then
+    if ! git push $repo --force HEAD:${INPUT_BRANCH} &>> /tmp/git_log.txt;then
         git_erro=$?
         echo "Git erro: $git_erro"
         echo "Erro in push"
@@ -66,6 +66,7 @@ else
     echo "The ${INPUT_REPO_PATH} directory is not there"
     exit 2
 fi
+cat /tmp/git_log.txt
 #
 # echo "Checking if published"
 # #
