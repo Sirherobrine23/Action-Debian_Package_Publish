@@ -54,13 +54,12 @@ then
     git add -A
     git commit -m "Upload Package: ${DEB_NAME}"
     echo "-------------------------"
-    if ! git push HEAD:${INPUT_BRANCH};then
-        echo "Error pushing the commit, 2 attempt"
-        git push HEAD:${INPUT_BRANCH} --force || {
-            echo "Git erro: $?"
-            echo "Erro in push"
-            exit 3
-        }
+    git push --force HEAD:${INPUT_BRANCH}||{
+        git_erro=$?
+        echo "Git erro: $git_erro"
+        echo "Erro in push"
+        exit $git_erro
+    }
     else
         echo "We have successfully published the package: ${DEB_NAME}"
     fi
