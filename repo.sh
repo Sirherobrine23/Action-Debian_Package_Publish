@@ -5,8 +5,6 @@ if [ $INPUT_GITHUB_TOKEN_V == $INPUT_TOKEN ];then
     exit 255
 fi
 DIR_PATH=`pwd`
-env|grep 'git'
-env|grep 'GIT'
 rm -rf .git
 # USE
 git config user.name 'github-actions'
