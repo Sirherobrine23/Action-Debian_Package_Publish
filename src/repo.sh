@@ -1,10 +1,12 @@
 #!/bin/bash
+cd /tmp
 if [ $INPUT_GITHUB_TOKEN_V == $INPUT_TOKEN ];then
     echo 'Do not use ${{secrets.GITHUB_TONKEN}}, it does not have access to other repositories'
     exit 255
 fi
 DIR_PATH=`pwd`
-GIT_EXEC_PATH=''
+env|grep 'git'
+env|grep 'GIT'
 rm -rf .git
 # USE
 git config user.name 'github-actions'
