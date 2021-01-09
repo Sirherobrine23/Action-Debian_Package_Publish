@@ -7,10 +7,10 @@ fi
 DIR_PATH=`pwd`
 rm -rf .git
 # USE
-git config user.name 'github-actions'
-git config user.email 'github-actions@github.com'
+git config --global user.email 'github-actions@github.com'
+git config --global user.name 'github-actions'
 git config --global http.postBuffer 157286400 sslVerify=false
-# sudo apt reinstall git
+
 # URL
 if echo $INPUT_REPOSITORY|grep -q 'https://';then
     url="$(echo $INPUT_REPOSITORY|sed 's|https://||g')"
