@@ -54,9 +54,9 @@ then
     git add -A
     git commit -m "Upload Package: ${DEB_NAME}"
     echo "-------------------------"
-    if ! git push;then
+    if ! git push HEAD:${INPUT_BRANCH};then
         echo "Error pushing the commit, 2 attempt"
-        git push --force || {
+        git push HEAD:${INPUT_BRANCH} --force || {
             echo "Git erro: $?"
             echo "Erro in push"
             exit 3
